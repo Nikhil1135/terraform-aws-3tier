@@ -3,7 +3,7 @@ resource "aws_instance" "nikhil" {
   instance_type = var.instance_type
   subnet_id = var.subnet_id
   key_name = var.key_name
-  associate_public_ip_address = true
+  # associate_public_ip_address = true
 
     user_data = <<-EOF
               #!/bin/bash
@@ -38,7 +38,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [ var.alb_sg_id ]
   }
 
   egress {
@@ -48,4 +48,6 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
 
