@@ -1,24 +1,25 @@
-resource "aws_instance" "nikhil" {
-  ami = var.ami
-  instance_type = var.instance_type
-  subnet_id = var.subnet_id
-  key_name = var.key_name
-  # associate_public_ip_address = true
+# resource "aws_instance" "nikhil" {
+#   ami = var.ami
+#   instance_type = var.instance_type
+#   subnet_id = var.subnet_id
+#   key_name = var.key_name
+#   # associate_public_ip_address = true
 
-    user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y nginx
-              systemctl start nginx
-              systemctl enable nginx
-              echo "Nikhil's new Terraform Project" > /usr/share/nginx/html/index.html
-              EOF
+#     user_data = <<-EOF
+#               #!/bin/bash
+#               yum update -y
+#               yum install -y nginx
+#               systemctl start nginx
+#               systemctl enable nginx
+#               echo "Nikhil's new Terraform Project" > /usr/share/nginx/html/index.html
+#               EOF
 
-  tags = {
-    Name = "terraform-ec2"
-  }
-  vpc_security_group_ids = [ aws_security_group.ec2_sg.id ]
-}
+#   tags = {
+#     Name = "terraform-ec2"
+#   }
+#   vpc_security_group_ids = [ aws_security_group.ec2_sg.id ]
+# }
+#===================================================================Above code was bulit without ASG=====================================
 
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-sg"

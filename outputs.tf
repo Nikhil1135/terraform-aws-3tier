@@ -12,6 +12,6 @@ output "private_subnet_ids" {
   value = module.network.private_subnet_ids
 }
 
-output "public_ip_of_ec2" {
-  value = module.ec2.public_ip_of_ec2
-}
+# output "public_ip_of_ec2" {
+#   value = module.ec2.public_ip_of_ec2
+# }
