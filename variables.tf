@@ -34,11 +34,25 @@ variable "instance_type" {
   default = "t2.micro"
 }
 # variable "subnet_id" {
-#   default = module.vpc.public_subnet_ids[0]
+#    # default = module.vpc.public_subnet_ids[0]
 # }
 variable "key_name" {
   type = string
   default = "win-key"
 }
 
+# variable "vpc_id" {
+  
+# }
 
+# variable "target_group_arn" {
+  
+# }
+
+# variable "e2_sg_id" {
+  
+# }
+
+# variable "private_subnet_ids" {
+  
+# }
