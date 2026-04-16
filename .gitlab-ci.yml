@@ -1,0 +1,62 @@
+image:
+  name: harshicorp/terraform:latest
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+stages:
+  - validate
+  - plan
+  - apply
+  - destroy
+
+before_script:
+  - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+  - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+  - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+  - terraform --version
+  - terraform init -input=false
+
+validate:
+  stage: validate
+  script:
+    - teraform fmt -recursive
+    - terraform validate
+  only:
+    - merge_requests
+    - main
+
+plan:
+  stage: plan
+  script:
+    - terraform init -input=false
+    - terraform plan -out=tfplan
+  artifacts:
+    paths:
+      - tfplan
+  only:
+    - merge_requests
+    - main
+
+apply:
+  stage: apply
+  script:
+    - terraform init -input=false
+    - terraform apply -auto-approve tfplan
+
+  when: manual
+  only:
+    - main
+
+destroy:
+  stage: destroy
+  script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+    - terraform --version
+    - terraform init -input=false
+    - terraform destroy -auto-approve
+  when: manual
+  only:
+    - main
