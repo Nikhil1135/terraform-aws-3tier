@@ -27,3 +27,7 @@ output "target_group_arn" {
 output "e2_sg_id" {
   value = module.ec2.e2_sg_id
 }
+
+output "db_endpoint" {
+  value = aws_db_instance.db.endpoint
+} 
