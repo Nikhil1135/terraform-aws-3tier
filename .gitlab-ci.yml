@@ -20,7 +20,7 @@ before_script:
 validate:
   stage: validate
   script:
-    - teraform fmt -recursive
+    - terraform fmt -recursive
     - terraform validate
   only:
     - merge_requests
